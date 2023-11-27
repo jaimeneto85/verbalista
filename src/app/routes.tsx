@@ -1,17 +1,42 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import { Home } from "./screens/home.screen";
-import { DragWords } from "./screens/dragWords.screen";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-const Stack = createNativeStackNavigator();
+import { MaterialIcons } from "@expo/vector-icons";
+
+import { Home } from "./screens/home/home.screen";
+import { DragWordsScreen } from "./screens/dragWords/dragWords.screen";
+
+const Tabs = createBottomTabNavigator();
 
 export const Routes = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="About" component={DragWords} />
-      </Stack.Navigator>
+      <Tabs.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Tabs.Screen
+          name="Home"
+          component={Home}
+          options={{
+            tabBarLabel: "Pick Words",
+            tabBarIcon: ({ color, size }) => {
+              return (
+                <MaterialIcons name="keyboard" color={color} size={size} />
+              );
+            },
+          }}
+        />
+        <Tabs.Screen
+          name="Drag words"
+          component={DragWordsScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => {
+              return <MaterialIcons name="swipe" color={color} size={size} />;
+            },
+          }}
+        />
+      </Tabs.Navigator>
     </NavigationContainer>
   );
 };
